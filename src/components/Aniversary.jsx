@@ -103,7 +103,7 @@ function Anniversary() {
     const colorInterval = setInterval(() => {
       setColorIndex((prevIndex) => (prevIndex + 1) % colors.length);
       setLanguageIndex((prevIndex) => (prevIndex + 1) % languages.length);
-    }, 1500);
+    }, 1650);
     return () => clearInterval(colorInterval);
   }, []);
 
