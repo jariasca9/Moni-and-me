@@ -64,7 +64,7 @@ function Home() {
   }, []);
 
   // Tiempos distintos para cada celda (en ms)
-  const intervals = [3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500,5555];
+  const intervals = [5500, 3000, 6500, 4000, 5000, 6000, 4500, 3500, 5555];
 
   // Efectos independientes para cada celda de imagen
   useEffect(() => {
