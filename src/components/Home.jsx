@@ -11,7 +11,7 @@ import photo4 from '../assets/images/imagen_4.jpg';
 import photo5 from '../assets/images/imagen_5.jpg';
 import photo6 from '../assets/images/imagen_6.jpg';
 import photo7 from '../assets/images/imagen_7.jpg';
-import photo8 from '../assets/images/imagen_8.jpg';
+// import photo8 from '../assets/images/imagen_8.jpg';
 import photo9 from '../assets/images/imagen_9.jpg';
 import photo10 from '../assets/images/imagen_10.jpg';
 import photo11 from '../assets/images/imagen_11.jpg';
@@ -27,7 +27,7 @@ import photo19 from '../assets/images/imagen_19.jpg';
 
 
 // Array de imágenes
-const photos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, photo8, photo9, photo10, photo11, photo12, photo13, photo14, photo15, photo16, photo17, photo18, photo19];
+const photos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, photo9, photo10, photo11, photo12, photo13, photo14, photo15, photo16, photo17, photo18, photo19];
 
 // Función para mezclar y seleccionar 8 imágenes sin repetición
 const shuffleArray = (array) => {
@@ -40,8 +40,12 @@ const shuffleArray = (array) => {
 };
 
 function Home() {
-  // Estado para las imágenes actuales
-  const [currentPhotos, setCurrentPhotos] = useState(shuffleArray(photos));
+  // Estado para las imágenes actuales de cada celda
+  const [cellPhotos, setCellPhotos] = useState(() => {
+    // Inicializa con 8 imágenes aleatorias distintas
+    const shuffled = shuffleArray(photos);
+    return shuffled.slice(0, 8);
+  });
   const [hearts, setHearts] = useState([]);
 
   // Generar corazones cada 1 segundo
@@ -49,22 +53,34 @@ function Home() {
     const heartInterval = setInterval(() => {
       const newHeart = {
         id: Math.random(),
-        left: `${Math.random() * 100}vw`, // Posición horizontal aleatoria
+        left: `${Math.random() * 100}vw`,
       };
-      setHearts((prev) => [...prev, newHeart].slice(-10)); // Mantener máximo 10 corazones
+      setHearts((prev) => [...prev, newHeart].slice(-10));
       setTimeout(() => {
         setHearts((prev) => prev.filter((heart) => heart.id !== newHeart.id));
-      }, 5000); // Eliminar corazón después de 5 segundos (duración de la animación)
+      }, 5000);
     }, 1000);
     return () => clearInterval(heartInterval);
   }, []);
 
-  // Cambiar imágenes cada 3 segundos
+  // Tiempos distintos para cada celda (en ms)
+  const intervals = [3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500,5555];
+
+  // Efectos independientes para cada celda de imagen
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPhotos(shuffleArray(photos));
-    }, 3000);
-    return () => clearInterval(interval);
+    const timers = cellPhotos.map((_, idx) => {
+      return setInterval(() => {
+        setCellPhotos((prev) => {
+          // Cambia solo la imagen de la celda idx
+          const available = photos.filter((p) => !prev.includes(p) || p === prev[idx]);
+          const next = available[Math.floor(Math.random() * available.length)];
+          const updated = [...prev];
+          updated[idx] = next;
+          return updated;
+        });
+      }, intervals[idx % intervals.length]);
+    });
+    return () => timers.forEach(clearInterval);
   }, []);
 
   // Estructura de la cuadrícula 3x3
@@ -104,7 +120,8 @@ function Home() {
           >
             {cell.type === 'image' ? (
               <img
-                src={currentPhotos[cell.index]}
+                key={cellPhotos[cell.index]} // Fuerza remount para animación
+                src={cellPhotos[cell.index]}
                 alt={`Memory ${cell.index + 1}`}
                 className="w-full h-full object-cover fade-in"
               />
