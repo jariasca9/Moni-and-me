@@ -1,4 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+
+// Importa todas las canciones automáticamente desde la carpeta
+const songsContext = import.meta.glob('../assets/songs/*.mp3', { eager: true });
+const songs = Object.values(songsContext).map((mod) => mod.default);
+
+function MusicPlayer() {
+  const [current, setCurrent] = useState(0);
+  const audioRef = useRef(null);
+
+  const handleEnded = () => {
+    setCurrent((prev) => (prev + 1) % songs.length);
+  };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // El navegador puede bloquear la reproducción automática, pero intentamos reproducir
+        });
+      }
+    }
+  }, [current]);
+
+  if (songs.length === 0) return null;
+
+  return (
+    <audio
+      ref={audioRef}
+      src={songs[current]}
+      autoPlay
+      onEnded={handleEnded}
+      controls
+      style={{ margin: '0 auto', display: 'block' }}
+    />
+  );
+}
 
 function Anniversary() {
   // Estado para forzar actualización cada segundo
@@ -126,13 +164,14 @@ function Anniversary() {
         </p>
       )}
       <p className="text-md text-gray-500 mt-4">
-        Eres mi todo, mi tan adorada y divina Moni 🥰🥰💖
+        Infinitamente gracias por todo, Moni 💖
       </p>
       <p className="text-lg text-gray-600 italic">
         Llevamos compartiendo nuestro amor por: <br />
         <span className="font-bold text-purple-600">{timeTogetherString}</span>
         🥰💖💖
       </p>
+      <MusicPlayer />
     </div>
   );
 }
