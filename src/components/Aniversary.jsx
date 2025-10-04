@@ -164,7 +164,8 @@ function Anniversary() {
         </p>
       )}
       <p className="text-md text-gray-500 mt-4">
-        Infinitamente gracias por todo, Moni 💖
+        Infinitamente gracias por todo, mi Moni 💖
+        Gracias por ser parte de mi vida y por cada momento compartido 💖
       </p>
       <p className="text-lg text-gray-600 italic">
         Llevamos compartiendo nuestro amor por: <br />
