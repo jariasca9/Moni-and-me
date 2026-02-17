@@ -67,7 +67,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background: linear-gradient(180deg, #0f172a, #020617);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -119,12 +119,62 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color:greenyellow;
   }
   a:hover {
     color: #747bff;
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+.carousel-track {
+  display: flex;
+  height: 100vh;
+  width: max-content;
+  animation: carousel-scroll 500s linear infinite;
+}
+
+.carousel-item {
+  flex: 0 0 50vw;
+  height: 100vh;
+}
+
+.carousel-image {
+  width: 90%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1.5rem;
+  padding-bottom: 3rem;
+  pointer-events: none;
+}
+
+.carousel-card {
+  pointer-events: auto;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.55);
+  padding: 1.75rem;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+@keyframes carousel-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
