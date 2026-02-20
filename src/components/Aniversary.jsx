@@ -154,7 +154,7 @@ function Anniversary() {
 
   return (
     <div className="text-center space-y-4">
-      <h1>¡Hola, {mi_amorcito}!</h1>
+      {/* <h1>¡Hola, {mi_amorcito}!</h1> */}
       <p>Nuestro aniversario es el {formattedDate}🥰💖</p>
 
 
@@ -163,16 +163,16 @@ function Anniversary() {
           ¡Hoy celebramos nuestro amor! 🥺💖
         </p>
       )}
-      <p className="text-md text-gray-500 mt-4">
-        Infinitamente gracias por todo, mi Moni 💖
-        Gracias por ser parte de mi vida y por cada momento compartido 💖
-      </p>
+      {/* <p className="text-md text-gray-500 mt-4"> */}
+        {/* Infinitamente gracias por todo, mi Moni 💖 */}
+        {/* Gracias por ser parte de mi vida y por cada momento compartido 💖 */}
+      {/* </p> */}
       <p className="text-lg text-gray-600 italic">
         Llevamos compartiendo nuestro amor por: <br />
         <span className="font-bold text-purple-600">{timeTogetherString}</span>
         🥰💖💖
       </p>
-      <MusicPlayer />
+      {/* <MusicPlayer /> */}
     </div>
   );
 }
