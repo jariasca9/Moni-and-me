@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import Anniversary from './Aniversary'
+
 
 const imagesContext = import.meta.glob('../assets/images/*.{jpg,jpeg,png,webp}', { eager: true });
 const songContext = import.meta.glob('../assets/songs/*.{mp3,ogg,wav}', { eager: true });
@@ -121,6 +123,9 @@ useEffect(() => {
           <h2>¡Hola, {mi_amorcito}!</h2>
           <p className="text-sm md:text-base text-slate-600 mb-6">
             {thanskfulnessMessages[messageIndex]}
+          </p>
+          <p>
+            <Anniversary />
           </p>
 
           {currentSong ? (
